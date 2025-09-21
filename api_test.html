@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Test</h1>
+    <button onclick="testAPI()">Test API Call</button>
+    <div id="log" class="log"></div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.textContent += message + '\n';
+        }
+
+        async function testAPI() {
+            log('Testing API call...');
+
+            const apiKey = 'f39192a2f7f445f38282cbf1c2246658.lygsRVNIj2cqOurj';
+            const apiUrl = 'https://open.bigmodel.cn/api/anthropic/v1/messages';
+
+            try {
+                log('Sending request to: ' + apiUrl);
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-3-sonnet-20240229',
+                        max_tokens: 100,
+                        messages: [
+                            {
+                                role: 'user',
+                                content: 'Hello, please respond with "API test successful"'
+                            }
+                        ]
+                    })
+                });
+
+                log('Response status: ' + response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                log('Response data: ' + JSON.stringify(data, null, 2));
+
+            } catch (error) {
+                log('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

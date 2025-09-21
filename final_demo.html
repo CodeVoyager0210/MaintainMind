@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Final Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F3FF 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .demo-title {
+            text-align: center;
+            color: #00CED1;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+        .chat-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">AI Assistant Demo</h1>
+
+        <div class="chat-wrapper">
+            <h2 class="testimonials-title">AI Assistant - Ask Me Anything</h2>
+            <div class="ai-chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="ai-welcome-message">
+                        <p>Hi! I'm your AI assistant. Feel free to ask me anything about aerospace engine monitoring, RUL prediction, or anomaly detection.</p>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" placeholder="Type your message here..." autocomplete="off">
+                    <button id="sendButton" class="send-button">Send</button>
+                </div>
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chat_final.js"></script>
+</body>
+</html>
