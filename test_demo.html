@@ -1,45 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaintainMind - Aviation Engine Anomaly Detection & RUL Prediction</title>
-    <meta property="og:title" content="MaintainMind">
-    <meta property="og:description" content="Advanced AI-powered aviation engine anomaly detection and remaining useful life prediction system">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <title>Fixed Chat Demo</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
-        rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F3FF 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .demo-title {
+            text-align: center;
+            color: #00CED1;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- 粒子背景画布 -->
-    <canvas id="particle-canvas"></canvas>
+    <div class="demo-container">
+        <h1 class="demo-title">AI Assistant Demo</h1>
 
-    <nav class="nav">
-        <div class="logo">MaintainMind</div>
-    </nav>
-
-    <div class="hero">
-        <h1>Predict Engine Health, Prevent Failures.</h1>
-        <p class="tagline">MaintainMind is your AI-powered system for aviation engine anomaly detection and remaining useful life prediction.</p>
-        <button class="cta-button" id="startMonitoringBtn">Start Monitoring</button>
-
-        <h2 class="assembly-title">Engine Health Dashboard</h2>
-        <div class="component-assembly">
-            <!-- Assembly dots will be added via JavaScript -->
-        </div>
-
-        <div class="section-separator"></div>
-
-        <!-- AI assistant Section -->
         <section class="testimonials-section" id="testimonials">
             <h2 class="testimonials-title">AI Assistant - Ask Me Anything</h2>
             <div class="ai-chat-container">
                 <div class="chat-messages" id="chatMessages">
                     <div class="ai-welcome-message">
-                        <p>Hi! I'm your AI assistant. Feel free to ask me anything about aerospace engine monitoring, RUL prediction, or anomaly detection.</p>
+                        <p>Hi! I'm your AI assistant. You can chat with me directly or upload a CSV file to ask questions about your data.</p>
                     </div>
                 </div>
                 <div class="chat-input-container">
@@ -62,12 +56,8 @@
                 </div>
             </div>
         </section>
-
-        <div class="section-separator"></div>
     </div>
 
-    <script src="animations.js"></script>
-    <script src="chat_enhanced.js"></script>
+    <script src="chat_fixed_v2.js"></script>
 </body>
-
 </html>

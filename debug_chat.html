@@ -4,94 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debug Chat</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #f0f0f0;
-        }
-        .testimonials-section {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .testimonials-title {
-            text-align: center;
-            color: #00CED1;
-            margin-bottom: 20px;
-        }
-        .ai-chat-container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            border-bottom: 1px solid #eee;
-        }
-        .ai-welcome-message {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-            color: #666;
-        }
-        .message {
-            margin-bottom: 15px;
-        }
-        .message.user {
-            text-align: right;
-        }
-        .message-content {
-            display: inline-block;
-            padding: 10px 15px;
-            border-radius: 12px;
-            max-width: 70%;
-        }
-        .message.user .message-content {
-            background: #007aff;
+        .debug-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-        }
-        .message.ai .message-content {
-            background: #f7f7f8;
-            color: #333;
-        }
-        .chat-input-container {
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-        }
-        #chatInput {
-            flex: 1;
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        #sendButton {
-            padding: 10px 20px;
-            background: #00CED1;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        #sendButton:hover {
-            background: #0099a0;
-        }
-        #sendButton:disabled {
-            background: #ccc;
-            cursor: not-allowed;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-width: 300px;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
+    <div class="debug-panel" id="debugPanel">
+        <div>Debug Info:</div>
+        <div id="debugInfo">Loading...</div>
+    </div>
+
     <section class="testimonials-section" id="testimonials">
         <h2 class="testimonials-title">AI Assistant - Ask Me Anything</h2>
         <div class="ai-chat-container">
@@ -102,74 +37,47 @@
             </div>
             <div class="chat-input-container">
                 <input type="text" id="chatInput" placeholder="Type your message here..." autocomplete="off">
-                <button id="sendButton">Send</button>
+                <label for="fileInput" class="file-upload-label">
+                    📎 Choose File
+                </label>
+                <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                <button id="sendButton" class="send-button">Send</button>
+            </div>
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </section>
 
     <script>
-        console.log('Script starting...');
+        // Debug function
+        function updateDebug(info) {
+            document.getElementById('debugInfo').innerHTML = info;
+        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded');
-
+        // Check DOM elements
+        window.addEventListener('load', function() {
             const chatInput = document.getElementById('chatInput');
             const sendButton = document.getElementById('sendButton');
-            const chatMessages = document.getElementById('chatMessages');
+            const fileInput = document.getElementById('fileInput');
 
-            console.log('Elements found:', {
-                chatInput: !!chatInput,
-                sendButton: !!sendButton,
-                chatMessages: !!chatMessages
-            });
+            updateDebug(`
+                chatInput: ${!!chatInput}<br>
+                sendButton: ${!!sendButton}<br>
+                fileInput: ${!!fileInput}<br>
+                Script loaded: Yes
+            `);
 
-            function addMessage(content, isUser = false) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
-
-                const messageContent = document.createElement('div');
-                messageContent.className = 'message-content';
-                messageContent.textContent = content;
-
-                messageDiv.appendChild(messageContent);
-                chatMessages.appendChild(messageDiv);
-
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Test click event
+            if (sendButton) {
+                sendButton.addEventListener('click', function() {
+                    updateDebug(`Button clicked!<br>Input value: ${chatInput ? chatInput.value : 'N/A'}`);
+                });
             }
-
-            async function sendMessageToAI(message) {
-                // Simulate AI response
-                setTimeout(() => {
-                    addMessage('This is a test response from the AI assistant.', false);
-                }, 1000);
-            }
-
-            function handleSendMessage() {
-                const message = chatInput.value.trim();
-
-                if (message) {
-                    addMessage(message, true);
-                    chatInput.value = '';
-                    sendMessageToAI(message);
-                }
-            }
-
-            sendButton.addEventListener('click', handleSendMessage);
-
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleSendMessage();
-                }
-            });
-
-            chatInput.addEventListener('input', function() {
-                sendButton.disabled = !this.value.trim();
-            });
-
-            sendButton.disabled = true;
-
-            console.log('Event listeners attached');
         });
     </script>
+    <script src="chat_fixed_v2.js"></script>
 </body>
 </html>

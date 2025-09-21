@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV RAG Demo (TF-IDF)</title>
+</head>
+<body>
+  <h2>CSV 知识库问答 (本地 TF-IDF)</h2>
+
+  <p>请输入 DeepSeek API Key：</p>
+  <input type="password" id="deepseekKey" placeholder="DeepSeek API Key" style="width: 300px;">
+  <br><br>
+
+  <input type="file" id="fileInput" accept=".csv">
+  <button id="loadBtn">加载 CSV 并构建知识库</button>
+
+  <p id="status"></p>
+
+  <hr>
+
+  <textarea id="question" rows="3" cols="50" placeholder="输入你的问题..."></textarea><br>
+  <button id="askBtn">提问</button>
+
+  <h3>回答：</h3>
+  <div id="answer"></div>
+
+  <script type="module">
+    import Papa from "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/+esm";
+
+    let deepseekKey = "";
+    let documents = []; // 每条 {text, tokens}
+    let df = {};        // 词 -> 出现在哪些文档
+    let idf = {};       // 词 -> 逆文档频率
+
+    function tokenize(text) {
+      return text.toLowerCase().match(/\b[\w\u4e00-\u9fff]+\b/g) || [];
+    }
+
+    function buildIndex(rows) {
+      documents = [];
+      df = {};
+
+      for (let i = 0; i < rows.length; i++) {
+        const text = JSON.stringify(rows[i]);
+        const tokens = tokenize(text);
+        documents.push({ text, tokens });
+
+        const unique = new Set(tokens);
+        for (const token of unique) {
+          if (!df[token]) df[token] = 0;
+          df[token]++;
+        }
+      }
+
+      const N = documents.length;
+      for (const token in df) {
+        idf[token] = Math.log(N / (df[token] + 1));
+      }
+    }
+
+    function tfidfScore(queryTokens, docTokens) {
+      const tf = {};
+      for (const t of docTokens) {
+        tf[t] = (tf[t] || 0) + 1;
+      }
+      const score = queryTokens.reduce((acc, t) => {
+        if (idf[t]) acc += (tf[t] || 0) * idf[t];
+        return acc;
+      }, 0);
+      return score;
+    }
+
+    document.getElementById("loadBtn").addEventListener("click", async () => {
+      deepseekKey = document.getElementById("deepseekKey").value.trim();
+      if (!deepseekKey) return alert("请输入 DeepSeek Key");
+
+      const file = document.getElementById("fileInput").files[0];
+      if (!file) return alert("请选择 CSV 文件");
+
+      document.getElementById("status").textContent = "解析 CSV...";
+      const text = await file.text();
+      const parsed = Papa.parse(text, { header: true });
+      const rows = parsed.data.filter(r => Object.keys(r).length > 0);
+
+      buildIndex(rows);
+      document.getElementById("status").textContent = `知识库构建完成，共 ${documents.length} 条记录。`;
+    });
+
+    document.getElementById("askBtn").addEventListener("click", async () => {
+      if (documents.length === 0) return alert("请先加载 CSV 构建知识库！");
+
+      const q = document.getElementById("question").value.trim();
+      if (!q) return alert("请输入问题！");
+
+      document.getElementById("answer").textContent = "思考中...";
+      const qTokens = tokenize(q);
+
+      const ranked = documents
+        .map(doc => ({
+          ...doc,
+          score: tfidfScore(qTokens, doc.tokens)
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+
+      const context = ranked.map(r => r.text).join("\n");
+
+      const resp = await fetch("https://api.deepseek.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${deepseekKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "deepseek-chat",
+          messages: [
+            { role: "system", content: "你是 CSV 数据问答助手。" },
+            { role: "user", content: `根据以下数据回答问题:\n${context}\n\n问题:${q}` }
+          ]
+        })
+      });
+
+      if (!resp.ok) {
+        document.getElementById("answer").textContent = "API 调用失败：" + resp.statusText;
+        return;
+      }
+
+      const data = await resp.json();
+      document.getElementById("answer").textContent = data.choices[0].message.content;
+    });
+  </script>
+</body>
+</html>
+

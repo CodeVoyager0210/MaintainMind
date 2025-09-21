@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test PapaParse CSV</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F3FF 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .demo-title {
+            text-align: center;
+            color: #00CED1;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+        .debug-info {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">CSV Parsing Test with PapaParse</h1>
+
+        <div class="debug-info" id="debugInfo">
+            Debug information will appear here...
+        </div>
+
+        <section class="testimonials-section" id="testimonials">
+            <h2 class="testimonials-title">AI Assistant - CSV Upload Test</h2>
+            <div class="ai-chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="ai-welcome-message">
+                        <p>Test CSV parsing with the sample.csv file or upload your own CSV file.</p>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" placeholder="Ask questions about the CSV data..." autocomplete="off">
+                    <label for="fileInput" class="file-upload-label">
+                        📎 Choose File
+                    </label>
+                    <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                    <button id="sendButton" class="send-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Debug function
+        function updateDebug(info) {
+            document.getElementById('debugInfo').innerHTML = info;
+        }
+
+        // Monitor PapaParse loading
+        let papaLoadAttempts = 0;
+        const checkPapa = setInterval(() => {
+            papaLoadAttempts++;
+            if (window.Papa) {
+                updateDebug(`PapaParse loaded successfully! (${papaLoadAttempts} checks)`);
+                clearInterval(checkPapa);
+            } else if (papaLoadAttempts > 20) {
+                updateDebug(`PapaParse failed to load after ${papaLoadAttempts} attempts`);
+                clearInterval(checkPapa);
+            }
+        }, 500);
+    </script>
+    <script src="chat_with_papaparse.js"></script>
+</body>
+</html>

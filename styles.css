@@ -931,14 +931,14 @@ h1 {
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 0.75rem 1.5rem;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
     flex-shrink: 0;
-    font-weight: 500;
 }
 
 .send-button:hover {
@@ -956,6 +956,89 @@ h1 {
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+.file-upload-label {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.file-upload-label:hover {
+    background: #17a2a8;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+.file-upload-label:active {
+    transform: scale(0.95);
+}
+
+/* File upload success animation */
+@keyframes fileSuccess {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+        background: var(--success);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.file-upload-label.success {
+    animation: fileSuccess 0.6s ease;
+    background: var(--success);
+}
+
+/* File upload area styling */
+.file-upload-success {
+    position: relative;
+    overflow: hidden;
+}
+
+.file-upload-success::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.file-upload-success.show::after {
+    animation: checkmarkFade 1s ease;
+}
+
+@keyframes checkmarkFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 .typing-indicator {

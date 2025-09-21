@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat Final Demo</title>
+    <title>Enhanced CSV Chat Demo</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -12,39 +12,105 @@
             padding: 40px 20px;
         }
         .demo-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         .demo-title {
             text-align: center;
             color: #00CED1;
             font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             font-weight: 600;
         }
-        .chat-wrapper {
+        .demo-subtitle {
+            text-align: center;
+            color: #5D6D7E;
+            margin-bottom: 3rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .feature-card {
             background: white;
-            border-radius: 20px;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature-title {
+            color: #2C3E50;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .feature-desc {
+            color: #5D6D7E;
+            font-size: 0.9rem;
+        }
+        .test-section {
+            background: white;
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="demo-container">
-        <h1 class="demo-title">AI Assistant Demo</h1>
+        <h1 class="demo-title">Enhanced CSV Chat Assistant</h1>
+        <p class="demo-subtitle">Upload CSV files and ask questions about your data using AI</p>
 
-        <div class="chat-wrapper">
-            <h2 class="testimonials-title">AI Assistant - Ask Me Anything</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Smart CSV Parsing</h3>
+                <p class="feature-desc">Automatically detects and parses CSV files with proper handling of headers and data types</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3 class="feature-title">TF-IDF Search</h3>
+                <p class="feature-desc">Intelligently finds relevant data using advanced text retrieval algorithms</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI Analysis</h3>
+                <p class="feature-desc">Powered by Deepseek AI for accurate and contextual answers</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Fast & Reliable</h3>
+                <p class="feature-desc">Quick file processing with fallback parsing methods</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="testimonials-title">Try it now!</h2>
             <div class="ai-chat-container">
                 <div class="chat-messages" id="chatMessages">
                     <div class="ai-welcome-message">
-                        <p>Hi! I'm your AI assistant. Feel free to ask me anything about aerospace engine monitoring, RUL prediction, or anomaly detection.</p>
+                        <p>👋 Hi! I'm your AI data assistant. Upload a CSV file and ask me questions about your data!</p>
+                        <br>
+                        <p><strong>Try uploading:</strong> <code>employees.csv</code> or <code>sample.csv</code></p>
                     </div>
                 </div>
                 <div class="chat-input-container">
-                    <input type="text" id="chatInput" placeholder="Type your message here..." autocomplete="off">
-                    <button id="sendButton" class="send-button">Send</button>
+                    <input type="text" id="chatInput" placeholder="Ask about your data..." autocomplete="off">
+                    <label for="fileInput" class="file-upload-label">
+                        📎 Choose File
+                    </label>
+                    <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                    <button id="sendButton" class="send-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                        </svg>
+                    </button>
                 </div>
                 <div class="typing-indicator" id="typingIndicator" style="display: none;">
                     <span></span>
@@ -55,6 +121,6 @@
         </div>
     </div>
 
-    <script src="chat_final.js"></script>
+    <script src="chat_enhanced.js"></script>
 </body>
 </html>

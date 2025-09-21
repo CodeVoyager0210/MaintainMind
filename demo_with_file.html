@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat with File Upload Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F3FF 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .demo-title {
+            text-align: center;
+            color: #00CED1;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+        .chat-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .features {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .features h3 {
+            color: #2C3E50;
+            margin-bottom: 1rem;
+        }
+        .features ul {
+            color: #5D6D7E;
+            padding-left: 1.5rem;
+        }
+        .features li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">AI Assistant with File Upload</h1>
+
+        <div class="features">
+            <h3>Features:</h3>
+            <ul>
+                <li>💬 Chat with AI assistant powered by Deepseek</li>
+                <li>📎 Upload CSV files to analyze data</li>
+                <li>🔍 TF-IDF based document retrieval</li>
+                <li>📊 Get insights from your data</li>
+            </ul>
+        </div>
+
+        <div class="chat-wrapper">
+            <h2 class="testimonials-title">AI Assistant - Ask Me Anything</h2>
+            <div class="ai-chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="ai-welcome-message">
+                        <p>Hi! I'm your AI assistant. You can chat with me directly or upload a CSV file to ask questions about your data.</p>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" placeholder="Type your message here..." autocomplete="off">
+                    <label for="fileInput" class="file-upload-label">
+                        📎 Choose File
+                    </label>
+                    <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                    <button id="sendButton" class="send-button">Send</button>
+                </div>
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chat_with_file.js"></script>
+</body>
+</html>
