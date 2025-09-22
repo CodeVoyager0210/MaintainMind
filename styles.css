@@ -97,6 +97,19 @@ body {
     transform: translateY(-20px);
 }
 
+.nav-image {
+    display: flex;
+    align-items: center;
+}
+
+.nav-img {
+    height: 40px;
+    border-radius: 0;
+    object-fit: cover;
+    /* border: 2px solid var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 206, 209, 0.3); */
+}
+
 .hero {
     min-height: 100vh;
     display: flex;

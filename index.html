@@ -19,6 +19,9 @@
 
     <nav class="nav">
         <div class="logo">MaintainMind</div>
+        <div class="nav-image">
+            <img src="images/xiaohui.png" alt="Xiaohui" class="nav-img">
+        </div>
     </nav>
 
     <div class="hero">
@@ -68,6 +71,12 @@
 
     <script src="animations.js"></script>
     <script src="chat_enhanced.js"></script>
+    <script>
+        // Add event listener for Start Monitoring button
+        document.getElementById('startMonitoringBtn').addEventListener('click', function() {
+            window.open('http://localhost:8080/#/', '_blank');
+        });
+    </script>
 </body>
 
 </html>

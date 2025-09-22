@@ -1,0 +1,1 @@
+双击start_visual_screen.bat,然后双击index.html即可
